@@ -2,6 +2,7 @@
 
 require "jekyll"
 require_relative "./jekyll_jam_comments/service"
+require_relative "./jekyll_jam_comments/configuration"
 
 module Jekyll
   module JamComments
@@ -14,10 +15,12 @@ module Jekyll
         super
 
         @path = path
-        @markup = service.fetch(:path => path)
       end
 
-      def render(_context)
+      def render(context)
+        path = context["page"] && context["page"]["url"]
+        markup = service.fetch(:path => path)
+
         "
           #{markup}
           <script src=\"#{CLIENT_SCRIPT_URL}\"></script>
@@ -30,10 +33,10 @@ module Jekyll
 
       def service
         @service ||= Service.new(
-          :domain      => configuration["domain"],
-          :api_key     => configuration["api_key"],
-          :base_url    => configuration["base_url"],
-          :environment => configuration["environment"]
+          :domain      => Jekyll::JamComments::Configuration.domain,
+          :api_key     => Jekyll::JamComments::Configuration.api_key,
+          :base_url    => Jekyll::JamComments::Configuration.base_url,
+          :environment => Jekyll::JamComments::Configuration.environment
         )
       end
 

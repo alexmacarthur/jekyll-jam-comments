@@ -14,7 +14,7 @@ describe Jekyll::JamComments::Tag do
         .and_return("<div>test markup</div>")
 
       liquid = <<-LIQUID
-        {% jam_comments /path %}
+        {% jam_comments %}
       LIQUID
 
       rendered = Liquid::Template.parse(liquid).render

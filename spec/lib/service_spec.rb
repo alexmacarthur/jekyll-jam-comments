@@ -26,7 +26,10 @@ describe Jekyll::JamComments::Service do
               :'X-Platform'  => "jekyll"
             ),
           }
-        )
+        ).and_return(OpenStruct.new(
+                       :code => 200,
+                       :body => "html!"
+                     ))
 
         instance.fetch(:path => "/path")
       end
@@ -56,9 +59,56 @@ describe Jekyll::JamComments::Service do
               :'X-Platform'  => "jekyll"
             ),
           }
-        )
+        ).and_return(OpenStruct.new(
+                       :code => 200,
+                       :body => "html!"
+                     ))
 
         instance.fetch(:path => "/path")
+      end
+    end
+
+    context "unauthorized" do
+      it "throws exception" do
+        instance = described_class.new(
+          :domain  => "example.com",
+          :api_key => "abc123",
+          :client  => client
+        )
+
+        expect(client)
+          .to receive(:get)
+          .and_return(OpenStruct.new(
+                        :code => 401,
+                        :body => "html!"
+                      ))
+
+        expect do
+          instance.fetch(:path => "/path")
+        end
+          .to raise_error("Oh no! It looks like your credentials for JamComments are incorrect.")
+      end
+    end
+
+    context "other error" do
+      it "throws exception" do
+        instance = described_class.new(
+          :domain  => "example.com",
+          :api_key => "abc123",
+          :client  => client
+        )
+
+        expect(client)
+          .to receive(:get)
+          .and_return(OpenStruct.new(
+                        :code => 500,
+                        :body => "html!"
+                      ))
+
+        expect do
+          instance.fetch(:path => "/path")
+        end
+          .to raise_error("Oh no! JamComments request failed. Please try again. Status: 500")
       end
     end
   end

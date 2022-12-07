@@ -35,10 +35,24 @@ module Jekyll
           },
         }
 
-        client.get(endpoint, options)
+        send_request(options)
       end
 
       private
+
+      def send_request(options)
+        response = client.get(endpoint, options)
+
+        if response.code == 401
+          raise "Oh no! It looks like your credentials for JamComments are incorrect."
+        end
+
+        if response.code != 200
+          raise "Oh no! JamComments request failed. Please try again. Status: #{response.code}"
+        end
+
+        response.body
+      end
 
       def stub_value
         return "true" if environment != "production"
