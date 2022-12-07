@@ -1,41 +1,47 @@
+# frozen_string_literal: true
+
 require "httparty"
 
 module Jekyll
   module JamComments
     class Service
-      include HTTParty
-
-      attr_reader :base_url, :environment
+      attr_reader :base_url, :environment, :domain, :api_key, :client
 
       def initialize(
-        base_url: 'https://go.jamcomments.com',
-        environment: 'production'
+        domain:,
+        api_key:,
+        base_url: nil,
+        environment: nil,
+        client: HTTParty
       )
-        @base_url = base_url
-        @environment = environment
+        @client = client
+        @domain = domain
+        @api_key = api_key
+        @base_url = base_url || "https://go.jamcomments.com"
+        @environment = environment || "production"
       end
 
-      def fetch(path:, domain:)
+      def fetch(path:)
         options = {
-          query: {
-            path: formatted_path(path),
-            domain: domain,
-            stub: stub_value
+          :query   => {
+            :path   => formatted_path(path),
+            :domain => domain,
+            :stub   => stub_value,
           },
-          headers: {
-            Authorization: `Bearer ${apiKey}`,
-            Accept: 'application/json',
-            'X-Platform': 'jekyll'
-          }
+          :headers => {
+            :Authorization => "Bearer #{api_key}",
+            :Accept        => "application/json",
+            :'X-Platform'  => "jekyll",
+          },
         }
 
-        self.class.get(endpoint, options)
+        client.get(endpoint, options)
       end
 
       private
 
       def stub_value
-        return 'true' unless environment != 'production'
+        return "true" if environment != "production"
 
         nil
       end
@@ -45,7 +51,7 @@ module Jekyll
       end
 
       def formatted_path(path)
-        path = path.empty? ? "/" : path
+        path.empty? ? "/" : path
       end
     end
   end

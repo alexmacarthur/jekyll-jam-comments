@@ -1,0 +1,6 @@
+require: rubocop-jekyll
+inherit_gem:
+  rubocop-jekyll: .rubocop.yml
+
+Metrics/ParameterLists:
+  Enabled: false
