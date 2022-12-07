@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 require "jekyll"
-require "pry"
-require_relative "./jekyll-jam-comments/service"
+require_relative "./jekyll_jam_comments/service"
 
 module Jekyll
   module JamComments

@@ -1,10 +1,9 @@
 PATH
   remote: .
   specs:
-    jekyll-jam-comments (0.0.1)
+    jekyll_jam_comments (0.0.1)
       httparty
       jekyll (>= 3.7, < 5.0)
-      pry
 
 GEM
   remote: https://rubygems.org/
@@ -122,7 +121,8 @@ PLATFORMS
 
 DEPENDENCIES
   bundler
-  jekyll-jam-comments!
+  jekyll_jam_comments!
+  pry
   rspec
   rubocop
   rubocop-jekyll
