@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    jekyll_jam_comments (0.0.2)
+    jekyll_jam_comments (1.0.0)
       httparty
       jekyll (>= 3.7, < 5.0)
 
