@@ -13,7 +13,7 @@ describe Jekyll::JamComments::Service do
         )
 
         expect(client).to receive(:get).with(
-          "https://go.jamcomments.com/api/markup",
+          "https://go.jamcomments.com/api/v2/markup",
           {
             :query   => hash_including(
               :path   => "/path",
@@ -23,7 +23,7 @@ describe Jekyll::JamComments::Service do
             :headers => hash_including(
               :Authorization => "Bearer abc123",
               :Accept        => "application/json",
-              :'X-Platform'  => "jekyll"
+              :"X-Platform"  => "jekyll"
             ),
           }
         ).and_return(OpenStruct.new(
@@ -46,7 +46,7 @@ describe Jekyll::JamComments::Service do
         )
 
         expect(client).to receive(:get).with(
-          "http://localhost/api/markup",
+          "http://localhost/api/v2/markup",
           {
             :query   => hash_including(
               :path   => "/path",
@@ -56,7 +56,7 @@ describe Jekyll::JamComments::Service do
             :headers => hash_including(
               :Authorization => "Bearer abc123",
               :Accept        => "application/json",
-              :'X-Platform'  => "jekyll"
+              :"X-Platform"  => "jekyll"
             ),
           }
         ).and_return(OpenStruct.new(

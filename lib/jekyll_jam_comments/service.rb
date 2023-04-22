@@ -31,7 +31,7 @@ module Jekyll
           :headers => {
             :Authorization => "Bearer #{api_key}",
             :Accept        => "application/json",
-            :'X-Platform'  => "jekyll",
+            :"X-Platform"  => "jekyll",
           },
         }
 
@@ -61,7 +61,7 @@ module Jekyll
       end
 
       def endpoint
-        "#{base_url}/api/markup"
+        "#{base_url}/api/v2/markup"
       end
 
       def formatted_path(path)

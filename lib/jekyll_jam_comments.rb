@@ -25,7 +25,7 @@ module Jekyll
           #{markup}
           <script src=\"#{CLIENT_SCRIPT_URL}\"></script>
           <script>
-            window.JamComments.initialize(root);
+            window.JamComments.initialize();
           </script>
         "
       end

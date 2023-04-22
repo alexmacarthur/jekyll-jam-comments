@@ -5,19 +5,21 @@ module Jekyll
     class Configuration
       class << self
         def domain
-          configuration["domain"] || ENV["JAM_COMMENTS_DOMAIN"]
+          configuration["domain"] || ENV.fetch("JAM_COMMENTS_DOMAIN", nil)
         end
 
         def base_url
-          configuration["base_url"] || ENV["JAM_COMMENTS_BASE_URL"]
+          configuration["base_url"] || ENV.fetch("JAM_COMMENTS_BASE_URL", nil)
         end
 
         def api_key
-          configuration["api_key"] || ENV["JAM_COMMENTS_API_KEY"]
+          configuration["api_key"] || ENV.fetch("JAM_COMMENTS_API_KEY", nil)
         end
 
         def environment
-          configuration["environment"] || ENV["JAM_COMMENTS_ENVIRONMENT"] || ENV["JEKYLL_ENV"]
+          configuration["environment"] || ENV["JAM_COMMENTS_ENVIRONMENT"] || ENV.fetch(
+            "JEKYLL_ENV", nil
+          )
         end
 
         def configuration
