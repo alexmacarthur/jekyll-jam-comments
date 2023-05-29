@@ -7,3 +7,6 @@ Metrics/ParameterLists:
 
 Style/OpenStructUse:
   Enabled: false
+
+Naming/MethodParameterName:
+  Enabled: false

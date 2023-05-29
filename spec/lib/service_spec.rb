@@ -90,6 +90,39 @@ describe Jekyll::JamComments::Service do
       end
     end
 
+    context "timezone" do
+      it "passes timezone" do
+        instance = described_class.new(
+          :base_url => "http://localhost",
+          :domain   => "example.com",
+          :api_key  => "abc123",
+          :tz       => "America/New_York",
+          :client   => client
+        )
+
+        expect(client).to receive(:get).with(
+          "http://localhost/api/v2/markup",
+          {
+            :query   => hash_including(
+              :path   => "/path",
+              :domain => "example.com",
+              :tz     => "America/New_York"
+            ),
+            :headers => hash_including(
+              :Authorization => "Bearer abc123",
+              :Accept        => "application/json",
+              :"X-Platform"  => "jekyll"
+            ),
+          }
+        ).and_return(OpenStruct.new(
+                       :code => 200,
+                       :body => "html!"
+                     ))
+
+        instance.fetch(:path => "/path")
+      end
+    end
+
     context "other error" do
       it "throws exception" do
         instance = described_class.new(

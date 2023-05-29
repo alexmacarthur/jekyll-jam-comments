@@ -13,7 +13,6 @@ Gem::Specification.new do |spec|
 
   spec.files            = Dir["lib/**/*"]
   spec.extra_rdoc_files = Dir["README.md", "LICENSE.txt"]
-  spec.test_files       = spec.files.grep(%r!^spec/!)
   spec.require_paths    = ["lib"]
 
   spec.required_ruby_version = ">= 2.7.2"

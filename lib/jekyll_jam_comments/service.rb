@@ -5,15 +5,17 @@ require "httparty"
 module Jekyll
   module JamComments
     class Service
-      attr_reader :base_url, :environment, :domain, :api_key, :client
+      attr_reader :base_url, :environment, :domain, :api_key, :client, :tz
 
       def initialize(
         domain:,
         api_key:,
         base_url: nil,
         environment: nil,
+        tz: nil,
         client: HTTParty
       )
+        @tz = tz
         @client = client
         @domain = domain
         @api_key = api_key
@@ -27,6 +29,7 @@ module Jekyll
             :path   => formatted_path(path),
             :domain => domain,
             :stub   => stub_value,
+            :tz     => tz,
           },
           :headers => {
             :Authorization => "Bearer #{api_key}",
