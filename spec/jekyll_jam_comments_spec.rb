@@ -20,7 +20,7 @@ describe Jekyll::JamComments::Tag do
       rendered = Liquid::Template.parse(liquid).render
 
       expect(rendered).to include("<div>test markup</div>")
-      expect(rendered).to match(%r!<script src="https://unpkg\.com/@jam-comments/client@(.*)/dist/index\.umd\.js"></script>!)
+      expect(rendered).to match(%r!window\.jcAlpine\.start()!)
     end
   end
 end

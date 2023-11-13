@@ -9,8 +9,6 @@ module Jekyll
     class Tag < Liquid::Tag
       attr_reader :path, :markup
 
-      CLIENT_SCRIPT_URL = "https://unpkg.com/@jam-comments/client@2.3.2/dist/index.umd.js"
-
       def initialize(tag_name, path, tokens)
         super
 
@@ -23,9 +21,8 @@ module Jekyll
 
         "
           #{markup}
-          <script src=\"#{CLIENT_SCRIPT_URL}\"></script>
           <script>
-            window.JamComments.initialize();
+            window.jcAlpine.start();
           </script>
         "
       end

@@ -64,7 +64,7 @@ module Jekyll
       end
 
       def endpoint
-        "#{base_url}/api/v2/markup"
+        "#{base_url}/api/v3/markup"
       end
 
       def formatted_path(path)
