@@ -13,7 +13,7 @@ describe Jekyll::JamComments::Service do
         )
 
         expect(client).to receive(:get).with(
-          "https://go.jamcomments.com/api/v2/markup",
+          "https://go.jamcomments.com/api/v3/markup",
           {
             :query   => hash_including(
               :path   => "/path",
@@ -46,7 +46,7 @@ describe Jekyll::JamComments::Service do
         )
 
         expect(client).to receive(:get).with(
-          "http://localhost/api/v2/markup",
+          "http://localhost/api/v3/markup",
           {
             :query   => hash_including(
               :path   => "/path",
@@ -101,7 +101,7 @@ describe Jekyll::JamComments::Service do
         )
 
         expect(client).to receive(:get).with(
-          "http://localhost/api/v2/markup",
+          "http://localhost/api/v3/markup",
           {
             :query   => hash_including(
               :path   => "/path",
