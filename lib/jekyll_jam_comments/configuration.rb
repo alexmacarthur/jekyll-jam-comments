@@ -35,7 +35,7 @@ module Jekyll
             :copy_preview_tab          => original_copy["preview_tab"],
             :copy_auth_button          => original_copy["auth_button"],
             :copy_log_out_button       => original_copy["log_out_button"],
-          }.compact! { |_key, value| value.nil? }
+          }.compact
         end
 
         def configuration
