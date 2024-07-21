@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "httparty"
-require "pry"
 
 module Jekyll
   module JamComments
