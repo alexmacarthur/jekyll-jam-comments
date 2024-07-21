@@ -32,7 +32,8 @@ module Jekyll
           :domain      => Jekyll::JamComments::Configuration.domain,
           :api_key     => Jekyll::JamComments::Configuration.api_key,
           :base_url    => Jekyll::JamComments::Configuration.base_url,
-          :environment => Jekyll::JamComments::Configuration.environment
+          :environment => Jekyll::JamComments::Configuration.environment,
+          :copy        => Jekyll::JamComments::Configuration.copy
         )
       end
 

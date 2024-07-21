@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 require "httparty"
+require "pry"
 
 module Jekyll
   module JamComments
     class Service
-      attr_reader :base_url, :environment, :domain, :api_key, :client, :tz
+      attr_reader :base_url, :environment, :domain, :api_key, :client, :tz, :copy
 
       def initialize(
         domain:,
@@ -13,9 +14,11 @@ module Jekyll
         base_url: nil,
         environment: nil,
         tz: nil,
+        copy: {},
         client: HTTParty
       )
         @tz = tz
+        @copy = copy
         @client = client
         @domain = domain
         @api_key = api_key
@@ -25,12 +28,7 @@ module Jekyll
 
       def fetch(path:)
         options = {
-          :query   => {
-            :path   => formatted_path(path),
-            :domain => domain,
-            :stub   => stub_value,
-            :tz     => tz,
-          },
+          :query   => request_query_params(path),
           :headers => {
             :Authorization => "Bearer #{api_key}",
             :Accept        => "application/json",
@@ -43,11 +41,22 @@ module Jekyll
 
       private
 
+      def request_query_params(path)
+        {
+          :path   => formatted_path(path),
+          :domain => domain,
+          :stub   => stub_value,
+          :tz     => tz,
+        }.merge(copy)
+      end
+
       def send_request(options)
         response = client.get(endpoint, options)
 
+        raise "JamComments request is invalid: #{response["message"]}" if response.code == 422
+
         if response.code == 401
-          raise "Oh no! It looks like your credentials for JamComments are incorrect."
+          raise "Unauthorized! It looks like your credentials for JamComments are incorrect."
         end
 
         if response.code != 200

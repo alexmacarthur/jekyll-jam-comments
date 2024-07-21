@@ -86,7 +86,9 @@ describe Jekyll::JamComments::Service do
         expect do
           instance.fetch(:path => "/path")
         end
-          .to raise_error("Oh no! It looks like your credentials for JamComments are incorrect.")
+          .to raise_error(
+            "Unauthorized! It looks like your credentials for JamComments are incorrect."
+          )
       end
     end
 
@@ -142,6 +144,92 @@ describe Jekyll::JamComments::Service do
           instance.fetch(:path => "/path")
         end
           .to raise_error("Oh no! JamComments request failed. Please try again. Status: 500")
+      end
+    end
+
+    context "custom copy" do
+      it "passes copy" do
+        instance = described_class.new(
+          :domain  => "example.com",
+          :api_key => "abc123",
+          :copy    => {
+            :copy_confirmation_message => "Thanks for commenting!",
+            :copy_submit_button        => "Post",
+            :copy_name_placeholder     => "Name",
+            :copy_email_placeholder    => "Email",
+            :copy_comment_placeholder  => "Comment",
+            :copy_write_tab            => "Write",
+            :copy_preview_tab          => "Preview",
+            :copy_auth_button          => "Log in",
+            :copy_log_out_button       => "Log out",
+          },
+          :client  => client
+        )
+
+        expect(client).to receive(:get).with(
+          "https://go.jamcomments.com/api/v3/markup",
+          {
+            :query   => hash_including(
+              :path                      => "/path",
+              :domain                    => "example.com",
+              :stub                      => nil,
+              :copy_confirmation_message => "Thanks for commenting!",
+              :copy_submit_button        => "Post",
+              :copy_name_placeholder     => "Name",
+              :copy_email_placeholder    => "Email",
+              :copy_comment_placeholder  => "Comment",
+              :copy_write_tab            => "Write",
+              :copy_preview_tab          => "Preview",
+              :copy_auth_button          => "Log in",
+              :copy_log_out_button       => "Log out"
+            ),
+            :headers => hash_including(
+              :Authorization => "Bearer abc123",
+              :Accept        => "application/json",
+              :"X-Platform"  => "jekyll"
+            ),
+          }
+        ).and_return(OpenStruct.new(
+                       :code => 200,
+                       :body => "html!"
+                     ))
+
+        instance.fetch(:path => "/path")
+      end
+
+      it "passes only some copy" do
+        instance = described_class.new(
+          :domain  => "example.com",
+          :api_key => "abc123",
+          :copy    => {
+            :copy_confirmation_message => "Thanks for commenting!",
+            :copy_submit_button        => "Post",
+          },
+          :client  => client
+        )
+
+        expect(client).to receive(:get).with(
+          "https://go.jamcomments.com/api/v3/markup",
+          {
+            :query   => hash_including(
+              :path                      => "/path",
+              :domain                    => "example.com",
+              :stub                      => nil,
+              :copy_confirmation_message => "Thanks for commenting!",
+              :copy_submit_button        => "Post"
+            ),
+            :headers => hash_including(
+              :Authorization => "Bearer abc123",
+              :Accept        => "application/json",
+              :"X-Platform"  => "jekyll"
+            ),
+          }
+        ).and_return(OpenStruct.new(
+                       :code => 200,
+                       :body => "html!"
+                     ))
+
+        instance.fetch(:path => "/path")
       end
     end
   end
