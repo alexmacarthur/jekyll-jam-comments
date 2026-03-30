@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "httparty"
   spec.add_dependency "jekyll", ">= 3.7", "< 5.0"
+  spec.add_dependency "ostruct"
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "pry"
