@@ -15,10 +15,11 @@ Gem::Specification.new do |spec|
   spec.extra_rdoc_files = Dir["README.md", "LICENSE.txt"]
   spec.require_paths    = ["lib"]
 
-  spec.required_ruby_version = ">= 2.7.2"
+  spec.required_ruby_version = ">= 4.0.0"
 
   spec.add_dependency "httparty"
   spec.add_dependency "jekyll", ">= 3.7", "< 5.0"
+  spec.add_dependency "ostruct"
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "pry"

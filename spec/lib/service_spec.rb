@@ -13,7 +13,7 @@ describe Jekyll::JamComments::Service do
         )
 
         expect(client).to receive(:get).with(
-          "https://go.jamcomments.com/api/v3/markup",
+          "https://go.jamcomments.com/api/v4/markup",
           {
             :query   => hash_including(
               :path   => "/path",
@@ -25,11 +25,11 @@ describe Jekyll::JamComments::Service do
               :Accept        => "application/json",
               :"X-Platform"  => "jekyll"
             ),
-          }
+          },
         ).and_return(OpenStruct.new(
-                       :code => 200,
-                       :body => "html!"
-                     ))
+                        :code => 200,
+                        :body => "html!"
+                      ))
 
         instance.fetch(:path => "/path")
       end
@@ -46,7 +46,7 @@ describe Jekyll::JamComments::Service do
         )
 
         expect(client).to receive(:get).with(
-          "http://localhost/api/v3/markup",
+          "http://localhost/api/v4/markup",
           {
             :query   => hash_including(
               :path   => "/path",
@@ -103,7 +103,7 @@ describe Jekyll::JamComments::Service do
         )
 
         expect(client).to receive(:get).with(
-          "http://localhost/api/v3/markup",
+          "http://localhost/api/v4/markup",
           {
             :query   => hash_including(
               :path   => "/path",
@@ -167,7 +167,7 @@ describe Jekyll::JamComments::Service do
         )
 
         expect(client).to receive(:get).with(
-          "https://go.jamcomments.com/api/v3/markup",
+          "https://go.jamcomments.com/api/v4/markup",
           {
             :query   => hash_including(
               :path                      => "/path",
@@ -209,7 +209,7 @@ describe Jekyll::JamComments::Service do
         )
 
         expect(client).to receive(:get).with(
-          "https://go.jamcomments.com/api/v3/markup",
+          "https://go.jamcomments.com/api/v4/markup",
           {
             :query   => hash_including(
               :path                      => "/path",

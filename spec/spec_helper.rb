@@ -15,6 +15,7 @@
 # it.
 
 require "pry"
+require "ostruct"
 
 # Load each file.
 Dir["#{Dir.getwd}/lib/*.rb"].sort.each { |file| require file }
